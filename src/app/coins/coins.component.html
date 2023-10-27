@@ -1,0 +1,40 @@
+<form class="d-flex">
+  <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Search"
+    aria-label="Search"
+    name="searchCoin"
+    [(ngModel)]="searchTerm"
+  />
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+<div class="container d-flex flex-wrap w-100">
+  <div
+    class="card"
+    style="width: 18rem"
+    *ngFor="let coin of coins | searchFilter : searchTerm"
+  >
+    <div class="card-header">
+      <h5 class="card-title">{{ coin.name | uppercase }}</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Classement {{ coin.rank }}</p>
+      <p>Prix actuel {{ coin.priceUsd | number : "1.0-0" }}</p>
+      <p>
+        <a [href]="coin.explorer">Site</a>
+      </p>
+      <button
+        type="button"
+        class="btn btn-dark"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        (click)="selectCoin(coin)"
+      >
+        Voir
+      </button>
+    </div>
+  </div>
+  <app-coins-modal [coin]="coin"></app-coins-modal>
+</div>
